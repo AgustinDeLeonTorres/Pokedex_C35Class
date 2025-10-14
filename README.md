@@ -57,17 +57,104 @@ Pokedex/
    🏃 Velocidad: 90
 
 📚 Lo que aprendí en este módulo
-Consumo de APIs REST: Aprendí a hacer peticiones HTTP a APIs externas usando la librería requests
+Consumo de APIs REST:
+Aprendí a hacer peticiones HTTP a APIs externas usando la librería requests. En el código, la función buscar_pokemon() hace peticiones GET a la PokeAPI y maneja diferentes respuestas HTTP.
 
-Manejo de JSON: Cómo procesar y trabajar con datos en formato JSON
+Manejo de JSON:
+Aprendí a procesar y trabajar con datos en formato JSON. La función _procesar_datos_pokemon() toma la respuesta JSON de la API y extrae la información específica que necesitamos como nombre, tipos, movimientos, etc.
 
-Manejo de errores: Cómo lidiar con diferentes status codes y excepciones
+Manejo de errores:
+Aprendí a lidiar con diferentes status codes y excepciones. El código maneja errores como:
 
-Manipulación de archivos: Crear, escribir y organizar archivos en el sistema
+Status 404 (Pokémon no encontrado)
 
-Programación orientada a objetos: Organizar el código en clases y métodos
+Status 200 (éxito)
 
-Manejo de dependencias: Usar requirements.txt para gestionar librerías externas
+Errores de conexión
+
+Excepciones generales con try-except
+
+Manipulación de archivos:
+Aprendí a crear, escribir y organizar archivos en el sistema. La función guardar_json() crea archivos JSON en la carpeta pokedex_json y la función _crear_carpeta_json() asegura que la carpeta exista.
+
+Programación orientada a objetos:
+Aprendí a organizar el código en clases y métodos. La clase Pokedex encapsula toda la funcionalidad con métodos específicos para cada tarea: buscar, procesar, mostrar y guardar información.
+
+Manejo de dependencias:
+Aprendí a usar requirements.txt para gestionar librerías externas y asegurar que otros desarrolladores puedan ejecutar el proyecto.
+
+Estructura de programas Python:
+Aprendí la importancia del if __name__ == "__main__": al final del código. Esto permite que el programa se ejecute cuando es llamado directamente, pero no cuando es importado como módulo en otro programa.
+
+🔧 Explicación de las funciones principales:
+__init__(self)
+Constructor de la clase - Se ejecuta al crear una nueva instancia de Pokedex
+
+Inicializa variables como la URL base y la carpeta para JSONs
+
+Asegura que la carpeta existe llamando a _crear_carpeta_json()
+
+buscar_pokemon(nombre)
+Hace la petición HTTP a la PokeAPI usando requests.get()
+
+Maneja los status codes: 200 (éxito), 404 (no encontrado), otros errores
+
+Retorna los datos procesados o None si hay error
+
+_procesar_datos_pokemon(datos)
+Extrae y estructura la información del JSON de la API
+
+Convierte unidades (peso y altura de decímetros a metros/kg)
+
+Organiza estadísticas, tipos, habilidades y movimientos en un diccionario
+
+mostrar_informacion(pokemon_info)
+Presenta la información de forma legible en la consola
+
+Muestra todos los datos: stats, movimientos, tipos, etc.
+
+Formatea la salida con emojis y separadores para mejor visualización
+
+guardar_json(pokemon_info)
+Guarda los datos en archivo JSON con encoding UTF-8
+
+Usa indentación para que el JSON sea legible
+
+Maneja errores de permisos o escritura de archivos
+
+ejecutar()
+Función principal del flujo - Controla la interacción con el usuario
+
+Maneja el bucle principal de búsquedas
+
+Pregunta al usuario si quiere guardar los resultados
+
+main()
+Punto de entrada del programa - Crea la instancia de Pokedex y la ejecuta
+
+Maneja excepciones globales y la interrupción por teclado (Ctrl+C)
+
+if __name__ == "__main__": main()
+Patrón estándar en Python - Asegura que main() solo se ejecute cuando el archivo es run directamente
+
+Permite que el código sea importado como módulo sin ejecutar automáticamente
+
+🎯 Conceptos técnicos implementados:
+Clases y objetos: La clase Pokedex como molde para crear instancias
+
+Métodos públicos y privados: _crear_carpeta_json() con _ indica método interno
+
+Manejo de excepciones: Try-except para errores de red y archivos
+
+Formato de strings: f-strings para interpolación de variables
+
+List comprehensions: Para procesar listas de movimientos y tipos
+
+Context managers: with open() para manejo seguro de archivos
+
+Módulo datetime: Para registrar fecha y hora de las consultas
+
+Esta estructura me permitió crear una aplicación funcional, mantenible y que cumple con todos los requisitos del proyecto mientras aplico las mejores prácticas de programación Python.
 
 🛠️ Tecnologías Utilizadas
 Python 3

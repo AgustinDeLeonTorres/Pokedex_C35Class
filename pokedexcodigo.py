@@ -6,9 +6,13 @@ from datetime import datetime
 class Pokedex:
     def __init__(self):
         self.base_url = "https://pokeapi.co/api/v2/pokemon/"
-        self.data_folder = "pokedex_json"  # Nombre actualizado
+        self.data_folder = "pokedex_json"
         
-        # Crear carpeta si no existe
+        # Asegurarnos de que la carpeta existe
+        self._crear_carpeta_json()
+    
+    def _crear_carpeta_json(self):
+        """Crea la carpeta para los JSONs si no existe"""
         if not os.path.exists(self.data_folder):
             os.makedirs(self.data_folder)
             print(f"📁 Carpeta '{self.data_folder}' creada exitosamente")
@@ -55,7 +59,7 @@ class Pokedex:
             'altura': datos['height'] / 10,  # Convertir a metros
             'tipos': [tipo['type']['name'] for tipo in datos['types']],
             'habilidades': [habilidad['ability']['name'] for habilidad in datos['abilities']],
-            'movimientos': [movimiento['move']['name'] for movimiento in datos['moves'][:10]],
+            'movimientos': [movimiento['move']['name'] for movimiento in datos['moves']],  # TODOS los movimientos
             'imagen_frontal': datos['sprites']['front_default'],
             'stats': {
                 'hp': datos['stats'][0]['base_stat'],
@@ -90,13 +94,19 @@ class Pokedex:
         print(f"   ❄️  Defensa Especial: {stats['defensa_especial']}")
         print(f"   🏃 Velocidad: {stats['velocidad']}")
         
-        print(f"\n👊 MOVIMIENTOS (primeros 10):")
+        
+        total_movimientos = len(pokemon_info['movimientos'])
+        print(f"\n👊 MOVIMIENTOS ({total_movimientos} en total):")
+        
+        
         for i, movimiento in enumerate(pokemon_info['movimientos'], 1):
-            print(f"   {i:2d}. {movimiento}")
+            print(f"   {i:3d}. {movimiento}")
         
         if pokemon_info['imagen_frontal']:
             print(f"\n🖼️  Imagen frontal: {pokemon_info['imagen_frontal']}")
             print("   💡 Copia esta URL en tu navegador para ver la imagen")
+        else:
+            print(f"\n🖼️  Imagen frontal: No disponible")
         print(f"{'='*60}")
     
     def guardar_json(self, pokemon_info):
@@ -104,6 +114,9 @@ class Pokedex:
         Guarda la información del Pokémon en un archivo JSON
         """
         try:
+            # Asegurarnos de que la carpeta existe
+            self._crear_carpeta_json()
+            
             filename = f"{self.data_folder}/{pokemon_info['nombre']}.json"
             with open(filename, 'w', encoding='utf-8') as f:
                 json.dump(pokemon_info, f, indent=2, ensure_ascii=False)
